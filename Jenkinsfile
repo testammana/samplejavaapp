@@ -9,7 +9,7 @@ pipeline {
         stage('compile') {
 	   steps {
                 echo 'compiling..'
-		git url: 'https://github.com/sammana9/DevOpsClassCodes'
+		git url: 'https://github.com/sammana9/samplejavaapp'
 		sh 'mvn compile'
            }
         }
