@@ -1,17 +1,22 @@
 pipeline {
     agent any
+	
+	tools{
+	maven 'Maven3.6'
+	}
+	
     stages {
         stage('compile') {
 	   steps {
                 echo 'compiling..'
 		git url: 'https://github.com/sammana9/DevOpsClassCodes'
-		sh script: '/opt/apache-maven-3.6.3/bin/mvn compile'
+		sh 'mvn compile'
            }
         }
         stage('codereview-pmd') {
 	   steps {
                 echo 'codereview..'
-		sh script: '/opt/apache-maven-3.6.3/bin/mvn -P metrics pmd:pmd'
+		sh 'mvn -P metrics pmd:pmd'
            }
 	   post {
                success {
@@ -22,7 +27,7 @@ pipeline {
         stage('unit-test') {
 	   steps {
                 echo 'unittest..'
-	        sh script: '/opt/apache-maven-3.6.3/bin/mvn test'
+	        sh 'mvn test'
                  }
 	   post {
                success {
@@ -33,7 +38,7 @@ pipeline {
         stage('codecoverate') {
 	   steps {
                 echo 'codecoverage..'
-		sh script: '/opt/apache-maven-3.6.3/bin/mvn cobertura:cobertura -Dcobertura.report.format=xml'
+		sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
            }
 	   post {
                success {
@@ -44,7 +49,7 @@ pipeline {
         stage('package') {
 	   steps {
                 echo 'package..'
-		sh script: '/opt/apache-maven-3.6.3/bin/mvn package'	
+		sh 'mvn package'	
            }		
         }
     }
